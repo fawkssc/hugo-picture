@@ -1,0 +1,12 @@
+{{- $image := false }}
+{{- with .Resource -}}
+{{- $image = . -}}
+{{- else -}}
+{{- $image = partial "FindResource.html" (dict "Src" .Image "Page" .Page) }}
+{{- end -}}
+{{- with .Processing -}}
+{{- $image = partial "image_processing/ProcessImage.html" (dict "Image" $image "Commands" . "Page" $.Page) -}}
+{{- end -}}
+{{- $attrs := .Attrs | default dict -}}
+{{- $attrs = merge $attrs (dict "width" $image.Width "height" $image.Height "loading" ($.Loading | default site.Params.image_processing.loading) "alt" ($.Title | default $image.Title | markdownify | plainify)) -}}
+<img src="{{ (. | resources.Fingerprint).RelPermalink }}"{{ range $attr, $value := $attrs }} {{ printf "%s=%q" $attr ($value | safeHTMLAttr) }}{{ end }} />

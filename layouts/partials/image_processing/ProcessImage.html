@@ -1,0 +1,27 @@
+{{- $processedImage := .Image -}}
+{{- range .Commands -}}
+{{- $command := index . 0 -}}
+{{- $options := index . 1 -}}
+{{- if and $options (ne (reflect.IsSlice $options) true) (ne (reflect.IsMap $options) true) -}}
+{{- if strings.Contains $options "{width}" -}}
+{{- $options = replace $options "{width}" $.Image.Width -}}
+{{- end -}}
+{{- if strings.Contains $options "{height}" -}}
+{{- $options = replace $options "{height}" $.Image.Height -}}
+{{- end -}}
+{{- end -}}
+{{- if eq $command "Resize" }}
+{{- $processedImage = $processedImage.Resize $options -}}
+{{- else if eq $command "Fit" }}
+{{- $processedImage = $processedImage.Fit $options -}}
+{{- else if eq $command "Fill" }}
+{{- $processedImage = $processedImage.Fill $options -}}
+{{- else if eq $command "Crop" }}
+{{- $processedImage = $processedImage.Crop $options -}}
+{{- else if eq $command "Filter" }}
+{{- $processedImage = partial "FilterImage.html" (dict "Image" $processedImage "Filters" $options "Page" $.Page "OriginalImage" $.Image) -}}
+{{- else -}}
+{{- erroridf "hugo-picture" "Invalid image processing command: %q %q" $command $options -}}
+{{- end -}}
+{{- end -}}
+{{ return $processedImage }}

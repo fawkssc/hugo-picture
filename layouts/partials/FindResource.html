@@ -1,0 +1,10 @@
+{{- $resource := false -}}
+{{- if hasPrefix (lower $resource) "http" -}}
+{{- $resource = resources.GetRemote .Src -}}
+{{- else -}}
+{{- with .Page.Resources.GetMatch .Src  }}
+{{- $resource = . -}}
+{{- else -}}
+{{- $resource = resources.Get .Src }}
+{{- end -}}
+{{ return $resource }}

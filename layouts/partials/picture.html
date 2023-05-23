@@ -1,0 +1,26 @@
+{{- $image := false }}
+{{- with .Resource -}}
+{{- $image = . -}}
+{{- else -}}
+{{- $image = partial "FindResource.html" (dict "Src" .Image "Page" .Page) }}
+{{- end -}}
+{{- with .Processing -}}
+{{- $image = partial "ProcessImage.html" (dict "Image" $image "Commands" . "Page" $.Page) -}}
+{{- end -}}
+<picture{{ range $attr, $value := .RootAttrs }} {{ printf "%s=%q" $attr ($value | safeHTMLAttr) }}{{ end }}>
+    {{- with .Inner -}}
+    {{- $.Scratch.Set "Image" $image -}}
+    {{ . }}
+    {{- else -}}
+    {{- with .SourceSets }}
+    {{- range . -}}
+    {{ partial "picture_source.html" (merge . (dict "Image" $image)) }}
+    {{- end -}}
+    {{- else -}}
+    {{- with $image.Resize (printf "%dx%d webp" $image.Width $image.Height) -}}
+    <source type="{{ .MediaType }}" srcset="{{ .RelPermalink }}" />
+    {{- end -}}
+    {{- end -}}
+    {{- end -}}
+    {{ partial "image.html" (dict "Resource" $image "Page" $.Page "Attrs" $.Attrs) }}
+</picture>

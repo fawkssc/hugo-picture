@@ -1,0 +1,39 @@
+{{- $filteredImage := .Image -}}
+{{- with .Filters -}}
+{{- $filters := slice }}
+{{- range . -}}
+{{- $command := index . 0 -}}
+{{- $options := after 1 .  -}}
+{{- if eq $command "Text" }}
+{{- $filters = $filters | append (images.Text $options) -}}
+{{- else if eq $command "Brightness" }}
+{{- $filters = $filters | append (images.Brightness $options) -}}
+{{- else if eq $command "ColorBalance" }}
+{{- $filters = $filters | append (images.ColorBalance $options) -}}
+{{- else if eq $command "Colorize" }}
+{{- $filters = $filters | append (images.Colorize $options) -}}
+{{- else if eq $command "Contrast" }}
+{{- $filters = $filters | append (images.Contrast $options) -}}
+{{- else if eq $command "Gamma" }}
+{{- $filters = $filters | append (images.Gamma $options) -}}
+{{- else if eq $command "GaussianBlur" }}
+{{- $filters = $filters | append (images.GaussianBlur $options) -}}
+{{- else if eq $command "Hue" }}
+{{- $filters = $filters | append (images.Hue $options) -}}
+{{- else if eq $command "Invert" }}
+{{- $filters = $filters | append (images.Invert $options) -}}
+{{- else if eq $command "Saturation" }}
+{{- $filters = $filters | append (images.Saturation $options) -}}
+{{- else if eq $command "Sepia" }}
+{{- $filters = $filters | append (images.Sepia $options) -}}
+{{- else if eq $command "Sigmoid" }}
+{{- $filters = $filters | append (images.Sigmoid $options) -}}
+{{- else if eq $command "UnsharpMask" }}
+{{- $filters = $filters | append (images.UnsharpMask $options) -}}
+{{- else -}}
+{{- erroridf "hugo-picture" "Invalid image filter command: (%q %q)" $command (delimit $options " ") -}}
+{{- end -}}
+{{- end -}}
+{{- $filteredImage = $filteredImage.Filter $filters -}}
+{{- end -}}
+{{ return $filteredImage }}
