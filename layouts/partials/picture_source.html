@@ -1,5 +1,5 @@
 {{- $sourceImage := .Image -}}
 {{- with .Processing -}}
-{{- $sourceImage = partial "ProcessImage.html" (dict "Image" $.Image "Commands" . "Page" $.Page "OriginalImage" $.OriginalImage) -}}
+{{- $sourceImage = partial "image_processing/ProcessImage.html" (dict "Image" $.Image "Commands" . "Page" $.Page "OriginalImage" $.OriginalImage) -}}
 {{- end -}}
 <source {{ with .Media }}media="{{ . }}" {{ end }}type="{{ $sourceImage.MediaType }}" srcset="{{ $sourceImage.RelPermalink }}" />

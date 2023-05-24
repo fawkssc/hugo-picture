@@ -7,7 +7,11 @@
 {{- with .Processing -}}
 {{- $image = partial "ProcessImage.html" (dict "Image" $image "Commands" . "Page" $.Page) -}}
 {{- end -}}
-<picture{{ range $attr, $value := .RootAttrs }} {{ printf "%s=%q" $attr ($value | safeHTMLAttr) }}{{ end }}>
+{{- $formatted_attrs := slice -}}
+{{- range $attr, $value := .RootAttrs -}}
+{{- $formatted_attrs = append $formatted_attrs (slice (printf "%s=%q" $attr ($value | safeHTMLAttr))) -}}
+{{- end -}}
+<picture{{ if gt (len $formatted_attrs) 0 }} {{ (delimit $formatted_attrs " ") | safeHTMLAttr }}{{ end }}>
     {{- with .Inner -}}
     {{- $.Scratch.Set "Image" $image -}}
     {{ . }}
