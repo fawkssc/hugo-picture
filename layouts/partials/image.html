@@ -9,4 +9,8 @@
 {{- end -}}
 {{- $attrs := .Attrs | default dict -}}
 {{- $attrs = merge $attrs (dict "width" $image.Width "height" $image.Height "loading" ($.Loading | default site.Params.image_processing.loading) "alt" ($.Title | default $image.Title | markdownify | plainify)) -}}
-<img src="{{ ($image | resources.Fingerprint).RelPermalink }}"{{ range $attr, $value := $attrs }} {{ printf "%s=%q" $attr ($value | safeHTMLAttr) }}{{ end }} />
+{{- $formatted_attrs := slice -}}
+{{- range $attr, $value := $attrs -}}
+{{- $formatted_attrs = append (printf "%s=%q" $attr ($value | safeHTMLAttr)) -}}
+{{- end -}}
+<img src="{{ ($image | resources.Fingerprint).RelPermalink }}" {{ delimit $formatted_attrs " " }} />
