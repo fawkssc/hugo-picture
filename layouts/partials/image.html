@@ -8,9 +8,9 @@
 {{- $image = partial "image_processing/ProcessImage.html" (dict "Image" $image "Commands" . "Page" $.Page) -}}
 {{- end -}}
 {{- $attrs := .Attrs | default dict -}}
-{{- $attrs = merge $attrs (dict "width" $image.Width "height" $image.Height "loading" ($.Loading | default site.Params.image_processing.loading) "alt" ($.Title | default $image.Title | markdownify | plainify)) -}}
+{{- $attrs = merge $attrs (dict "width" $image.Width "height" $image.Height "loading" ($.Loading | default site.Params.image_processing.loading | default "lazy") "alt" ($.Title | default $image.Title | markdownify | plainify)) -}}
 {{- $formatted_attrs := slice -}}
 {{- range $attr, $value := $attrs -}}
-{{- $formatted_attrs = append (printf "%s=%q" $attr ($value | safeHTMLAttr)) -}}
+{{- $formatted_attrs = append $formatted_attrs (slice (printf "%s=%q" $attr ($value | safeHTMLAttr))) -}}
 {{- end -}}
-<img src="{{ ($image | resources.Fingerprint).RelPermalink }}" {{ delimit $formatted_attrs " " }} />
+<img src="{{ ($image | resources.Fingerprint).RelPermalink }}" {{ (delimit $formatted_attrs " ") | safeHTMLAttr }} />

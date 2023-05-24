@@ -4,32 +4,34 @@
 {{- range . -}}
 {{- $command := index . 0 -}}
 {{- $options := after 1 .  -}}
-{{- if eq $command "Text" }}
+{{- if eq $command "Overlay" }}
+{{- $filters = $filters | append (images.Overlay $options) -}}
+{{- else if eq $command "Text" }}
 {{- $filters = $filters | append (images.Text $options) -}}
 {{- else if eq $command "Brightness" }}
-{{- $filters = $filters | append (images.Brightness $options) -}}
+{{- $filters = $filters | append (images.Brightness (index $options 0)) -}}
 {{- else if eq $command "ColorBalance" }}
-{{- $filters = $filters | append (images.ColorBalance $options) -}}
+{{- $filters = $filters | append (images.ColorBalance (index $options 0)) -}}
 {{- else if eq $command "Colorize" }}
-{{- $filters = $filters | append (images.Colorize $options) -}}
+{{- $filters = $filters | append (images.Colorize (index $options 0)) -}}
 {{- else if eq $command "Contrast" }}
-{{- $filters = $filters | append (images.Contrast $options) -}}
+{{- $filters = $filters | append (images.Contrast (index $options 0)) -}}
 {{- else if eq $command "Gamma" }}
-{{- $filters = $filters | append (images.Gamma $options) -}}
+{{- $filters = $filters | append (images.Gamma (index $options 0)) -}}
 {{- else if eq $command "GaussianBlur" }}
-{{- $filters = $filters | append (images.GaussianBlur $options) -}}
+{{- $filters = $filters | append (images.GaussianBlur (index $options 0)) -}}
 {{- else if eq $command "Hue" }}
-{{- $filters = $filters | append (images.Hue $options) -}}
+{{- $filters = $filters | append (images.Hue (index $options 0)) -}}
 {{- else if eq $command "Invert" }}
-{{- $filters = $filters | append (images.Invert $options) -}}
+{{- $filters = $filters | append (images.Invert (index $options 0)) -}}
 {{- else if eq $command "Saturation" }}
-{{- $filters = $filters | append (images.Saturation $options) -}}
+{{- $filters = $filters | append (images.Saturation (index $options 0)) -}}
 {{- else if eq $command "Sepia" }}
-{{- $filters = $filters | append (images.Sepia $options) -}}
+{{- $filters = $filters | append (images.Sepia (index $options 0)) -}}
 {{- else if eq $command "Sigmoid" }}
-{{- $filters = $filters | append (images.Sigmoid $options) -}}
+{{- $filters = $filters | append (images.Sigmoid (index $options 0)) -}}
 {{- else if eq $command "UnsharpMask" }}
-{{- $filters = $filters | append (images.UnsharpMask $options) -}}
+{{- $filters = $filters | append (images.UnsharpMask (index $options 0)) -}}
 {{- else -}}
 {{- erroridf "hugo-picture" "Invalid image filter command: (%q %q)" $command (delimit $options " ") -}}
 {{- end -}}

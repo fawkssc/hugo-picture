@@ -19,7 +19,7 @@
 {{- else if eq $command "Crop" }}
 {{- $processedImage = $processedImage.Crop $options -}}
 {{- else if eq $command "Filter" }}
-{{- $processedImage = partial "FilterImage.html" (dict "Image" $processedImage "Filters" $options "Page" $.Page "OriginalImage" $.Image) -}}
+{{- $processedImage = partial "image_processing/FilterImage.html" (dict "Image" $processedImage "Filters" $options "Page" $.Page "OriginalImage" $.Image) -}}
 {{- else -}}
 {{- erroridf "hugo-picture" "Invalid image processing command: %q %q" $command $options -}}
 {{- end -}}
