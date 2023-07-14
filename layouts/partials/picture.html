@@ -2,7 +2,7 @@
 {{- with .Resource -}}
 {{- $image = . -}}
 {{- else -}}
-{{- $image = partial "image_processing/FindResource.html" (dict "Src" .Image "Page" .Page) }}
+{{- $image = partial "FindResource.html" (dict "Src" .Image "Page" .Page) }}
 {{- end -}}
 {{- with .Processing -}}
 {{- $image = partial "image_processing/ProcessImage.html" (dict "Image" $image "Commands" . "Page" $.Page) -}}
