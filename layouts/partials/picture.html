@@ -2,10 +2,10 @@
 {{- with .Resource -}}
 {{- $image = . -}}
 {{- else -}}
-{{- $image = partial "FindResource.html" (dict "Src" .Image "Page" .Page) }}
+{{- $image = partial "image_processing/FindResource.html" (dict "Src" .Image "Page" .Page) }}
 {{- end -}}
 {{- with .Processing -}}
-{{- $image = partial "ProcessImage.html" (dict "Image" $image "Commands" . "Page" $.Page) -}}
+{{- $image = partial "image_processing/ProcessImage.html" (dict "Image" $image "Commands" . "Page" $.Page) -}}
 {{- end -}}
 {{- $formatted_attrs := slice -}}
 {{- range $attr, $value := .RootAttrs -}}
