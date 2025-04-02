@@ -1,3 +1,3 @@
-module github.com/jefawks3/hugo-picture
+module github.com/fawkssc/hugo-picture
 
-go 1.17
+go 1.18

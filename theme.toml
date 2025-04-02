@@ -3,13 +3,13 @@
 
 name = "Hugo Picture"
 license = "MIT"
-licenselink = "https://github.com/jefawks3/hugo-picture/blob/main/LICENSE"
+licenselink = "https://github.com/fawkssc/hugo-picture/blob/main/LICENSE"
 description = "Configurable Image processing for Hugo."
-homepage = "https://github.com/jefawks3/hugo-picture"
+homepage = "https://github.com/fawkssc/hugo-picture"
 tags = ["image", "picture"]
 features = ["responsive"]
 min_version = "0.41.0"
 
 [author]
-  name = "James Fawks"
-  homepage = "https://jfawks.com"
+  name = "Fawks Software Consulting"
+  homepage = "https://www.fawkssoftwareconsulting.com"
